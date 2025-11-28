@@ -1,0 +1,51 @@
+The algorithm can be stated as Create a queue q which will contain the vertices to be processed and a Boolean array used which indicates for each vertex, if it has been lit or visited 
+
+Rust
+use std::collections::VecDeque;
+fn bfs(adj: &Vec<Vec<i32>>, n: usize, s: usize) -> (Vec<i32>, Vec<i32>) {
+	let mut q = VecDeque::new();
+	let mut used = vec![false; n];
+	let mut d = vec![0; n];
+	let mut p = vec![-1; n];
+	
+	q.push_back(s);
+	used[s] = true;
+	
+	while let Some(v) = q.pop_front() {
+		for &u in &adj[v] {
+			let u = u as usize;
+			if !used[u] {
+				used[u] = true;
+				q.push_back(u);
+				d[u] = d[v] + 1;
+				p[u] = v as i32;
+			}
+		}
+	}
+	(d, p)
+}
+
+
+vector<vector<int>> adj;
+int n;
+int s;
+
+queue<int> q;
+vector<bool> used(n);
+vector<int> d(n), p(n);
+
+q.push(s);
+used[s] = true;
+p[s] = -1;
+while(!q.empty()) {
+	int v = q.front();
+	q.pop();
+	for (int u : adj[v]) {
+		if (!used[u]) {
+			used[u] = true;
+			q.push(u);
+			d[u] = d[v] + 1;
+			p[u] = v;
+		}
+	}
+}
