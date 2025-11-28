@@ -1,0 +1,30 @@
+The Idea behind DFS is to go as deep into the Graph as possible, and backtrack once you are at a vertex without any unvisited adjacent vertices.
+
+Implement the algorithm recursively. we start the search at one vertex. After visiting a vertex, we further perform a DFS for each adjacent vertex that we havent visited before. This way we visit all vertices that are reachable from the starting vertex
+
+Rust
+
+fn dfs(v :usize, adj: &Vec<Vec<usize>>, visited: &mut Vec<bool>) {
+	visited[v] = true;
+	for &u in &adj[v] {
+		if !visited[u] {
+			dfs(u, adj, visited);
+		}
+	}
+}
+
+
+C++
+
+vector<vector<int>> adj;
+int n;
+
+vector<bool> visited;
+
+void dfs(int v) {
+	visited[v] = true;
+	for (int u : adj[v]) {
+		if (!visited[u])
+			dfs(u);
+	}
+}
